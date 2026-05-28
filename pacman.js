@@ -1,12 +1,12 @@
+// pacman.js - Pac-Man Pasta (con controlli D-Pad)
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Dimensioni cella
 const CELL_SIZE = 20;
 const COLS = 16;
 const ROWS = 16;
 
-// Mappa del gioco (0=vuoto, 1=muro, 2=spaghetti, 3=pomodoro)
 const map = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     [1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1],
@@ -26,10 +26,8 @@ const map = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
-// Giocatore (forchetta)
 let player = { x: 1, y: 1, dir: { x: 0, y: 0 }, nextDir: { x: 0, y: 0 } };
 
-// Nemici (pomodori)
 let enemies = [
     { x: 7, y: 7, dir: { x: 1, y: 0 }, color: '#d9534f' },
     { x: 8, y: 7, dir: { x: -1, y: 0 }, color: '#c9302c' }
@@ -40,7 +38,6 @@ let score = 0;
 let gameRunning = true;
 let animationId;
 
-// Conta gli spaghetti
 function countSpaghetti() {
     spaghettiCount = 0;
     for (let row of map) {
@@ -50,7 +47,6 @@ function countSpaghetti() {
     }
 }
 
-// Disegna la mappa
 function drawMap() {
     for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLS; col++) {
@@ -58,13 +54,11 @@ function drawMap() {
             const y = row * CELL_SIZE;
             
             if (map[row][col] === 1) {
-                // Muro (legno)
                 ctx.fillStyle = '#8b5a2b';
                 ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                 ctx.strokeStyle = '#6b4423';
                 ctx.strokeRect(x, y, CELL_SIZE, CELL_SIZE);
             } else if (map[row][col] === 2) {
-                // Spaghetti (gialli)
                 ctx.fillStyle = '#f0e68c';
                 ctx.beginPath();
                 ctx.arc(x + CELL_SIZE/2, y + CELL_SIZE/2, 4, 0, Math.PI * 2);
@@ -74,17 +68,15 @@ function drawMap() {
     }
 }
 
-// Disegna il giocatore (forchetta)
 function drawPlayer() {
     const x = player.x * CELL_SIZE + CELL_SIZE/2;
     const y = player.y * CELL_SIZE + CELL_SIZE/2;
     
-    ctx.fillStyle = '#c0c0c0'; // Argento
+    ctx.fillStyle = '#c0c0c0';
     ctx.beginPath();
     ctx.arc(x, y, 8, 0, Math.PI * 2);
     ctx.fill();
     
-    // Rebbi della forchetta
     ctx.strokeStyle = '#a0a0a0';
     ctx.lineWidth = 2;
     for (let i = -1; i <= 1; i++) {
@@ -95,19 +87,16 @@ function drawPlayer() {
     }
 }
 
-// Disegna i nemici (pomodori)
 function drawEnemies() {
     enemies.forEach(enemy => {
         const x = enemy.x * CELL_SIZE + CELL_SIZE/2;
         const y = enemy.y * CELL_SIZE + CELL_SIZE/2;
         
-        // Pomodoro
         ctx.fillStyle = enemy.color;
         ctx.beginPath();
         ctx.arc(x, y, 8, 0, Math.PI * 2);
         ctx.fill();
         
-        // Faccina arrabbiata
         ctx.fillStyle = 'white';
         ctx.fillRect(x - 4, y - 2, 2, 2);
         ctx.fillRect(x + 2, y - 2, 2, 2);
@@ -120,26 +109,21 @@ function drawEnemies() {
     });
 }
 
-// Controlla se una cella è libera
 function canMove(x, y) {
     return map[y][x] !== 1;
 }
 
-// Muovi il giocatore
 function movePlayer() {
-    // Prima prova a girare nella direzione desiderata (nextDir)
     if (player.nextDir.x !== 0 || player.nextDir.y !== 0) {
         const nextX = player.x + player.nextDir.x;
         const nextY = player.y + player.nextDir.y;
         
-        // Se posso girare nella direzione desiderata, fallo!
         if (canMove(nextX, nextY)) {
             player.dir = { ...player.nextDir };
-            player.nextDir = { x: 0, y: 0 }; // Resetta nextDir dopo aver girato
+            player.nextDir = { x: 0, y: 0 };
         }
     }
     
-    // Ora muovi nella direzione corrente
     const newX = player.x + player.dir.x;
     const newY = player.y + player.dir.y;
     
@@ -147,7 +131,6 @@ function movePlayer() {
         player.x = newX;
         player.y = newY;
         
-        // Mangia spaghetti
         if (map[newY][newX] === 2) {
             map[newY][newX] = 0;
             score += 10;
@@ -156,7 +139,6 @@ function movePlayer() {
     }
 }
 
-// Muovi i nemici (AI semplice)
 function moveEnemies() {
     enemies.forEach(enemy => {
         const directions = [
@@ -164,28 +146,24 @@ function moveEnemies() {
             { x: 0, y: 1 }, { x: 0, y: -1 }
         ];
         
-        // Filtra direzioni valide
         const validDirs = directions.filter(dir => {
             const newX = enemy.x + dir.x;
             const newY = enemy.y + dir.y;
             return map[newY][newX] !== 1;
         });
         
-        // Scegli direzione casuale valida
         if (validDirs.length > 0) {
             const randomDir = validDirs[Math.floor(Math.random() * validDirs.length)];
             enemy.x += randomDir.x;
             enemy.y += randomDir.y;
         }
         
-        // Controlla collisione con giocatore
         if (enemy.x === player.x && enemy.y === player.y) {
             gameOver();
         }
     });
 }
 
-// Game Over
 function gameOver() {
     gameRunning = false;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
@@ -203,7 +181,6 @@ function gameOver() {
     canvas.addEventListener('click', initGame, { once: true });
 }
 
-// Vittoria
 function victory() {
     gameRunning = false;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
@@ -221,27 +198,21 @@ function victory() {
     canvas.addEventListener('click', initGame, { once: true });
 }
 
-// Loop principale
 function gameLoop() {
     if (!gameRunning) return;
     
-    // Pulisci canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Aggiorna
     movePlayer();
     moveEnemies();
     
-    // Disegna
     drawMap();
     drawPlayer();
     drawEnemies();
     
-    // Aggiorna punteggio
     document.getElementById('score').textContent = 
         `Punti: ${score} | Spaghetti rimasti: ${spaghettiCount}`;
     
-    // Controlla vittoria
     if (spaghettiCount === 0) {
         victory();
         return;
@@ -250,24 +221,19 @@ function gameLoop() {
     animationId = requestAnimationFrame(gameLoop);
 }
 
-// Inizializza gioco
 function initGame() {
     if (animationId) cancelAnimationFrame(animationId);
     
-    // Reset player
     player = { x: 1, y: 1, dir: { x: 0, y: 0 }, nextDir: { x: 0, y: 0 } };
     
-    // Reset nemici
     enemies = [
         { x: 7, y: 7, dir: { x: 1, y: 0 }, color: '#d9534f' },
         { x: 8, y: 7, dir: { x: -1, y: 0 }, color: '#c9302c' }
     ];
     
-    // Reset punteggio
     score = 0;
     gameRunning = true;
     
-    // Ricarica mappa (resetta spaghetti mangiati)
     for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLS; col++) {
             if (map[row][col] === 0 && !(row === 7 && col === 8) && !(row === 8 && col === 8)) {
@@ -291,41 +257,25 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
 });
 
-// Controlli touch (swipe)
-let touchStartX = 0;
-let touchStartY = 0;
-
-canvas.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-    e.preventDefault();
-}, { passive: false });
-
-canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-}, { passive: false });
-
-canvas.addEventListener('touchend', (e) => {
-    if (!touchStartX || !touchStartY) return;
+// ==========================================
+// CONTROLLI D-PAD VIRTUALE (Pulsanti a schermo)
+// ==========================================
+document.querySelectorAll('.d-btn').forEach(btn => {
+    const dir = btn.dataset.dir;
     
-    const touchEndX = e.changedTouches[0].clientX;
-    const touchEndY = e.changedTouches[0].clientY;
+    const handlePress = (e) => {
+        e.preventDefault();
+        switch(dir) {
+            case 'up':    player.nextDir = { x: 0, y: -1 }; break;
+            case 'down':  player.nextDir = { x: 0, y: 1 };  break;
+            case 'left':  player.nextDir = { x: -1, y: 0 }; break;
+            case 'right': player.nextDir = { x: 1, y: 0 };  break;
+        }
+    };
     
-    const dx = touchEndX - touchStartX;
-    const dy = touchEndY - touchStartY;
-    
-    if (Math.abs(dx) > Math.abs(dy)) {
-        // Orizzontale
-        player.nextDir = { x: dx > 0 ? 1 : -1, y: 0 };
-    } else {
-        // Verticale
-        player.nextDir = { x: 0, y: dy > 0 ? 1 : -1 };
-    }
-    
-    touchStartX = 0;
-    touchStartY = 0;
-    e.preventDefault();
-}, { passive: false });
+    btn.addEventListener('touchstart', handlePress, { passive: false });
+    btn.addEventListener('mousedown', handlePress);
+});
 
 // Avvia il gioco
 initGame();

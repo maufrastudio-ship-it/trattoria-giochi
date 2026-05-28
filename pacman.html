@@ -15,20 +15,15 @@
             max-width: 100%;
             touch-action: none;
         }
-        .controls {
-            margin: 10px 0;
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 <body>
 
-    <!-- INIZIO LOADER -->
+    <!-- LOADER -->
     <div id="page-loader" class="loader-overlay">
-        <div class="loader-emoji"></div>
+        <div class="loader-emoji">🍝</div>
         <p class="loader-text">La Nonna sta preparando...</p>
     </div>
-
     <script>
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -36,20 +31,26 @@
             }, 900);
         });
     </script>
-    <!-- FINE LOADER -->
 
     <h2>🍝 Pac-Man Pasta</h2>
-    <p>Mangia gli spaghetti! Evita i pomodori arrabbiati!</p>
-    <p id="score">Punti: 0 | Spaghetti rimasti: 0</p>
+    <p id="score" style="font-weight: bold;">Punti: 0 | Spaghetti: 0</p>
     
     <canvas id="gameCanvas" width="320" height="320"></canvas>
     
-    <div class="controls">
-        <p>👆 Scorri o usa le frecce ⬆️️⬅️➡️</p>
+    <!-- D-PAD CONTROLS -->
+    <div class="d-pad">
+        <div class="d-row">
+            <button class="d-btn" data-dir="up">⬆️</button>
+        </div>
+        <div class="d-row">
+            <button class="d-btn" data-dir="left">⬅️</button>
+            <button class="d-btn" data-dir="down">⬇️</button>
+            <button class="d-btn" data-dir="right">➡️</button>
+        </div>
     </div>
 
     <button class="btn-start" onclick="initGame()">🔄 Ricomincia</button>
-    <button class="btn-start" onclick="location.href='index.html'" style="margin-left: 10px;">🏠 Menu</button>
+    <button class="btn-start" onclick="location.href='index.html'">🏠 Menu</button>
 
     <script src="pacman.js"></script>
 </body>

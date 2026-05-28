@@ -1,3 +1,5 @@
+// quiz.js - Quiz di Cucina
+
 const questions = [
     {
         question: "Qual è l'ingrediente principale della Carbonara?",
@@ -76,5 +78,4 @@ function showFinalScore() {
         `Hai fatto ${score} su ${questions.length}! ${score >= 3 ? '🎉 Bravo!' : ' Riprova!'}`;
 }
 
-// Avvia il quiz
 loadQuestion();

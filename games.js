@@ -1,6 +1,7 @@
-// Array di "immagini" (usiamo emoji per non dover caricare file pesanti)
+// games.js - Memory della Pizza
+
 const emojis = ['', '🍝', '🍷', '🍅', '🧀', '🌿'];
-const cards = [...emojis, ...emojis]; // Doppio per fare le coppie
+const cards = [...emojis, ...emojis];
 let flippedCards = [];
 let matchedPairs = 0;
 
@@ -10,7 +11,7 @@ function shuffle(array) {
 
 function initGame() {
     const board = document.getElementById('game-board');
-    if (!board) return; // Se non siamo nella pagina memory, esci
+    if (!board) return;
 
     board.innerHTML = '';
     const shuffledCards = shuffle(cards);
@@ -20,8 +21,7 @@ function initGame() {
         card.classList.add('card-memory');
         card.dataset.value = emoji;
         card.dataset.index = index;
-        card.textContent = '?'; // Retro della carta
-        
+        card.textContent = '?';
         card.addEventListener('click', () => flipCard(card));
         board.appendChild(card);
     });
@@ -30,7 +30,7 @@ function initGame() {
 function flipCard(card) {
     if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
         card.classList.add('flipped');
-        card.textContent = card.dataset.value; // Mostra l'emoji
+        card.textContent = card.dataset.value;
         flippedCards.push(card);
 
         if (flippedCards.length === 2) {
@@ -43,14 +43,12 @@ function checkMatch() {
     const [card1, card2] = flippedCards;
 
     if (card1.dataset.value === card2.dataset.value) {
-        // Match trovato!
         matchedPairs++;
         flippedCards = [];
         if (matchedPairs === emojis.length) {
-            setTimeout(() => alert("Bravo! Hai trovato tutte le coppie! "), 500);
+            setTimeout(() => alert("Bravo! Hai trovato tutte le coppie! 🎉"), 300);
         }
     } else {
-        // Nessun match, rigira dopo un attimo
         setTimeout(() => {
             card1.classList.remove('flipped');
             card1.textContent = '?';
@@ -61,5 +59,4 @@ function checkMatch() {
     }
 }
 
-// Avvia il gioco se siamo nella pagina giusta
 window.onload = initGame;

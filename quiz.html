@@ -8,12 +8,11 @@
 </head>
 <body>
 
-    <!-- INIZIO LOADER -->
+    <!-- LOADER -->
     <div id="page-loader" class="loader-overlay">
-        <div class="loader-emoji"></div>
+        <div class="loader-emoji">🍝</div>
         <p class="loader-text">La Nonna sta preparando...</p>
     </div>
-
     <script>
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -21,18 +20,15 @@
             }, 900);
         });
     </script>
-    <!-- FINE LOADER -->
 
     <h2>🍝 Quiz di Cucina</h2>
     <p id="question">Caricamento domanda...</p>
     
-    <div id="answers" style="margin: 20px 0;">
-        <!-- Le risposte vengono generate da JavaScript -->
-    </div>
+    <div id="answers" style="margin: 20px 0;"></div>
 
     <p id="score" style="font-size: 1.2rem; margin-top: 20px;"></p>
 
-    <button class="btn-start" onclick="location.href='index.html'">Torna al Menu</button>
+    <button class="btn-start" onclick="location.href='index.html'">🏠 Torna al Menu</button>
 
     <script src="quiz.js"></script>
 </body>

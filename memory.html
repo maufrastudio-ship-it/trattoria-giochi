@@ -8,12 +8,11 @@
 </head>
 <body>
 
-    <!-- INIZIO LOADER -->
+    <!-- LOADER -->
     <div id="page-loader" class="loader-overlay">
-        <div class="loader-emoji"></div>
+        <div class="loader-emoji">🍕</div>
         <p class="loader-text">La Nonna sta preparando...</p>
     </div>
-
     <script>
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -21,16 +20,13 @@
             }, 900);
         });
     </script>
-    <!-- FINE LOADER -->
 
     <h2>🍕 Memory della Pizza</h2>
     <p>Trova tutte le coppie!</p>
     
-    <div class="memory-grid" id="game-board">
-        <!-- Le carte vengono generate da JavaScript -->
-    </div>
+    <div class="memory-grid" id="game-board"></div>
 
-    <button class="btn-start" onclick="location.href='index.html'">Torna al Menu</button>
+    <button class="btn-start" onclick="location.href='index.html'">🏠 Torna al Menu</button>
 
     <script src="games.js"></script>
 </body>

@@ -1,11 +1,11 @@
-/* style.css */
+/* style.css - I Giochi della Nonna */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&display=swap');
 
 :root {
-    --bg-color: #f4e4bc; /* Colore carta antica */
-    --text-color: #4a3b2a; /* Marrone scuro */
-    --accent-color: #d9534f; /* Rosso pomodoro */
-    --wood-color: #8b5a2b; /* Legno */
+    --bg-color: #f4e4bc;
+    --text-color: #4a3b2a;
+    --accent-color: #d9534f;
+    --wood-color: #8b5a2b;
 }
 
 body {
@@ -15,7 +15,6 @@ body {
     text-align: center;
     margin: 0;
     padding: 20px;
-    /* Sottile texture per effetto carta (opzionale) */
     background-image: radial-gradient(#dcd0a0 1px, transparent 1px);
     background-size: 20px 20px;
 }
@@ -25,7 +24,7 @@ h1, h2 {
     color: var(--wood-color);
 }
 
-/* Stile delle carte del menu giochi */
+/* Menu giochi */
 .game-card {
     background: white;
     border: 2px solid var(--wood-color);
@@ -51,9 +50,10 @@ h1, h2 {
     border-radius: 5px;
     cursor: pointer;
     font-family: 'Playfair Display', serif;
+    margin: 5px;
 }
 
-/* Stile specifico per il Memory */
+/* Memory */
 .memory-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -78,7 +78,8 @@ h1, h2 {
     background-color: white;
     border: 2px solid var(--wood-color);
 }
-/* ================= LOADER ================= */
+
+/* LOADER */
 .loader-overlay {
     position: fixed;
     top: 0;
@@ -97,7 +98,7 @@ h1, h2 {
 .loader-overlay.hidden {
     opacity: 0;
     visibility: hidden;
-    pointer-events: none; /* Evita che blocchi i click quando scompare */
+    pointer-events: none;
 }
 
 .loader-emoji {
@@ -122,4 +123,54 @@ h1, h2 {
 @keyframes loader-pulse {
     0%, 100% { opacity: 0.4; transform: scale(1); }
     50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* D-PAD per Pac-Man */
+.d-pad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    gap: 8px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.d-row {
+    display: flex;
+    gap: 8px;
+}
+
+.d-btn {
+    width: 65px;
+    height: 65px;
+    font-size: 1.8rem;
+    background: var(--wood-color);
+    color: var(--bg-color);
+    border: 3px solid #6b4423;
+    border-radius: 14px;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 5px 0 #5a3a1a;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.d-btn:active,
+.d-btn.active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #5a3a1a;
+    background: #a06b3a;
+}
+
+@media (max-width: 400px) {
+    .d-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
+    }
 }
