@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Disegna il Piatto</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #drawCanvas {
+            border: 3px solid var(--wood-color);
+            background-color: #fff8e1; /* Carta pergamena */
+            border-radius: 10px;
+            display: block;
+            margin: 10px auto;
+            max-width: 100%;
+            touch-action: none; /* Blocca lo scroll mentre disegni */
+            cursor: crosshair;
+        }
+        .draw-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .color-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 3px solid var(--wood-color);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .color-btn.active {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 3px var(--accent-color);
+        }
+        .tool-btn {
+            padding: 12px 20px;
+            font-family: 'Playfair Display', serif;
+            background: var(--wood-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .tool-btn:active {
+            background: #6b4423;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div id="page-loader" class="loader-overlay">
+        <div class="loader-emoji">🎨</div>
+        <p class="loader-text">La Nonna sta preparando...</p>
+    </div>
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('page-loader').classList.add('hidden'), 900);
+        });
+    </script>
+
+    <h2>🎨 Disegna il Piatto</h2>
+    <p>Libera la fantasia mentre aspetti la pasta!</p>
+
+    <div class="draw-controls">
+        <button class="color-btn active" style="background:#d9534f" data-color="#d9534f"></button>
+        <button class="color-btn" style="background:#f0ad4e" data-color="#f0ad4e"></button>
+        <button class="color-btn" style="background:#5cb85c" data-color="#5cb85c"></button>
+        <button class="color-btn" style="background:#8b5a2b" data-color="#8b5a2b"></button>
+        <button class="color-btn" style="background:#333" data-color="#333"></button>
+        <button class="color-btn" style="background:#fff; border-color:#ccc" data-color="#fff" title="Gomma"></button>
+    </div>
+
+    <canvas id="drawCanvas" width="340" height="340"></canvas>
+
+    <div class="draw-controls">
+        <button class="tool-btn" id="clearBtn">🗑️ Foglio Nuovo</button>
+        <button class="tool-btn" onclick="location.href='index.html'">🏠 Menu</button>
+    </div>
+
+    <script src="draw.js"></script>
+</body>
+</html>
