@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pac-Man Pasta</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #gameCanvas {
+            border: 3px solid var(--wood-color);
+            background-color: #2c1810;
+            border-radius: 10px;
+            display: block;
+            margin: 10px auto;
+            max-width: 100%;
+            touch-action: none;
+        }
+        .controls {
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🍝 Pac-Man Pasta</h2>
+    <p>Mangia gli spaghetti! Evita i pomodori arrabbiati!</p>
+    <p id="score">Punti: 0 | Spaghetti rimasti: 0</p>
+    
+    <canvas id="gameCanvas" width="320" height="320"></canvas>
+    
+    <div class="controls">
+        <p>👆 Scorri o usa le frecce ⬆️️⬅️➡️</p>
+    </div>
+
+    <button class="btn-start" onclick="initGame()">🔄 Ricomincia</button>
+    <button class="btn-start" onclick="location.href='index.html'" style="margin-left: 10px;">🏠 Menu</button>
+
+    <script src="pacman.js"></script>
+</body>
+</html>
