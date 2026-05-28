@@ -8,6 +8,21 @@
 </head>
 <body>
 
+    <!-- INIZIO LOADER -->
+    <div id="page-loader" class="loader-overlay">
+        <div class="loader-emoji">🍝</div>
+        <p class="loader-text">La Nonna sta preparando...</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 900);
+        });
+    </script>
+    <!-- FINE LOADER -->
+
     <div style="margin-bottom: 30px;">
         <h1>I Giochi della Nonna</h1>
         <p>Aspetta la tua pasta... e divertiti!</p>

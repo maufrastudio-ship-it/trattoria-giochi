@@ -23,6 +23,21 @@
 </head>
 <body>
 
+    <!-- INIZIO LOADER -->
+    <div id="page-loader" class="loader-overlay">
+        <div class="loader-emoji"></div>
+        <p class="loader-text">La Nonna sta preparando...</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 900);
+        });
+    </script>
+    <!-- FINE LOADER -->
+
     <h2>🍝 Pac-Man Pasta</h2>
     <p>Mangia gli spaghetti! Evita i pomodori arrabbiati!</p>
     <p id="score">Punti: 0 | Spaghetti rimasti: 0</p>

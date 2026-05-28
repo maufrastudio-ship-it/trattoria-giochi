@@ -120,21 +120,30 @@ function drawEnemies() {
     });
 }
 
+// Controlla se una cella è libera
+function canMove(x, y) {
+    return map[y][x] !== 1;
+}
+
 // Muovi il giocatore
 function movePlayer() {
-    // Prova a cambiare direzione
-    const nextX = player.x + player.nextDir.x;
-    const nextY = player.y + player.nextDir.y;
-    
-    if (map[nextY][nextX] !== 1) {
-        player.dir = { ...player.nextDir };
+    // Prima prova a girare nella direzione desiderata (nextDir)
+    if (player.nextDir.x !== 0 || player.nextDir.y !== 0) {
+        const nextX = player.x + player.nextDir.x;
+        const nextY = player.y + player.nextDir.y;
+        
+        // Se posso girare nella direzione desiderata, fallo!
+        if (canMove(nextX, nextY)) {
+            player.dir = { ...player.nextDir };
+            player.nextDir = { x: 0, y: 0 }; // Resetta nextDir dopo aver girato
+        }
     }
     
-    // Muovi nella direzione corrente
+    // Ora muovi nella direzione corrente
     const newX = player.x + player.dir.x;
     const newY = player.y + player.dir.y;
     
-    if (map[newY][newX] !== 1) {
+    if (canMove(newX, newY)) {
         player.x = newX;
         player.y = newY;
         
@@ -279,6 +288,7 @@ document.addEventListener('keydown', (e) => {
         case 'ArrowLeft': player.nextDir = { x: -1, y: 0 }; break;
         case 'ArrowRight': player.nextDir = { x: 1, y: 0 }; break;
     }
+    e.preventDefault();
 });
 
 // Controlli touch (swipe)

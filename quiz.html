@@ -8,6 +8,21 @@
 </head>
 <body>
 
+    <!-- INIZIO LOADER -->
+    <div id="page-loader" class="loader-overlay">
+        <div class="loader-emoji"></div>
+        <p class="loader-text">La Nonna sta preparando...</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 900);
+        });
+    </script>
+    <!-- FINE LOADER -->
+
     <h2>🍝 Quiz di Cucina</h2>
     <p id="question">Caricamento domanda...</p>
     
