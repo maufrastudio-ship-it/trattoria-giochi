@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parole Nascoste</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="page-loader" class="loader-overlay"><div class="loader-emoji"></div><p class="loader-text">La Nonna sta preparando...</p></div>
+    <script>window.addEventListener('load', () => setTimeout(() => document.getElementById('page-loader').classList.add('hidden'), 900));</script>
+
+    <h2>🔍 Parole Nascoste</h2>
+    <p>Trova le parole della tradizione!</p>
+    
+    <div class="word-list" id="wordList"></div>
+    <div class="word-grid" id="grid"></div>
+    <p id="status" style="font-style: italic; margin-top: 15px;">Tocca la prima e l'ultima lettera di ogni parola.</p>
+
+    <button class="btn-start" onclick="location.href='index.html'">🏠 Menu</button>
+    <script src="parole.js"></script>
+</body>
+</html>

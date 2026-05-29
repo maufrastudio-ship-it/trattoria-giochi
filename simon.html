@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequenza di Sapori</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="page-loader" class="loader-overlay"><div class="loader-emoji">🧠</div><p class="loader-text">La Nonna sta preparando...</p></div>
+    <script>window.addEventListener('load', () => setTimeout(() => document.getElementById('page-loader').classList.add('hidden'), 900));</script>
+
+    <h2>🧠 Sequenza di Sapori</h2>
+    <p id="simon-status">Premi Start per iniziare!</p>
+    <p id="simon-score">Livello: 0</p>
+    
+    <div class="simon-board">
+        <div class="simon-btn" data-color="red"></div>
+        <div class="simon-btn" data-color="green"></div>
+        <div class="simon-btn" data-color="yellow"></div>
+        <div class="simon-btn" data-color="purple"></div>
+    </div>
+
+    <button class="btn-start" id="startBtn">▶️ Start</button>
+    <button class="btn-start" onclick="location.href='index.html'">🏠 Menu</button>
+    <script src="simon.js"></script>
+</body>
+</html>
