@@ -8,12 +8,12 @@
     <style>
         #drawCanvas {
             border: 3px solid var(--wood-color);
-            background-color: #fff8e1; /* Carta pergamena */
+            background-color: #fff8e1;
             border-radius: 10px;
             display: block;
             margin: 10px auto;
             max-width: 100%;
-            touch-action: none; /* Blocca lo scroll mentre disegni */
+            touch-action: none;
             cursor: crosshair;
         }
         .draw-controls {
@@ -24,8 +24,7 @@
             margin: 15px 0;
         }
         .color-btn {
-            width: 45px;
-            height: 45px;
+            width: 45px; height: 45px;
             border-radius: 50%;
             border: 3px solid var(--wood-color);
             cursor: pointer;
@@ -45,8 +44,34 @@
             cursor: pointer;
             font-size: 1rem;
         }
-        .tool-btn:active {
-            background: #6b4423;
+        .tool-btn:active { background: #6b4423; }
+        
+        /* Template selector styles */
+        .template-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .template-btn {
+            width: 50px; height: 50px;
+            border: 2px solid var(--wood-color);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.2s;
+        }
+        .template-btn.active {
+            border-color: var(--accent-color);
+            background: #ffeaa7;
+            transform: scale(1.1);
+        }
+        .template-btn.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -64,8 +89,14 @@
     </script>
 
     <h2>🎨 Disegna il Piatto</h2>
-    <p>Libera la fantasia mentre aspetti la pasta!</p>
+    
+    <!-- Template selector + status -->
+    <div id="template-selector" class="template-selector"></div>
+    <p id="status" style="font-style:italic; min-height:1.5em;"></p>
+    
+    <p style="margin-top:5px;">Libera la fantasia mentre aspetti la pasta!</p>
 
+    <!-- Colori -->
     <div class="draw-controls">
         <button class="color-btn active" style="background:#d9534f" data-color="#d9534f"></button>
         <button class="color-btn" style="background:#f0ad4e" data-color="#f0ad4e"></button>
@@ -75,10 +106,13 @@
         <button class="color-btn" style="background:#fff; border-color:#ccc" data-color="#fff" title="Gomma"></button>
     </div>
 
+    <!-- Canvas -->
     <canvas id="drawCanvas" width="340" height="340"></canvas>
 
+    <!-- Pulsanti azione -->
     <div class="draw-controls">
-        <button class="tool-btn" id="clearBtn">🗑️ Foglio Nuovo</button>
+        <button class="tool-btn" id="completeBtn">✅ Completato</button>
+        <button class="tool-btn" id="clearBtn">🗑️ Nuovo</button>
         <button class="tool-btn" onclick="location.href='index.html'">🏠 Menu</button>
     </div>
 

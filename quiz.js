@@ -1,61 +1,66 @@
-// quiz.js - Quiz di Cucina
+// quiz.js - Quiz con Round Finale
 
 const questions = [
-    {
-        question: "Qual è l'ingrediente principale della Carbonara?",
-        answers: ["Panna", "Uova", "Pomodoro", "Piselli"],
-        correct: 1
-    },
-    {
-        question: "Quale città ha dato i natali alla Pizza Margherita?",
-        answers: ["Roma", "Milano", "Napoli", "Bologna"],
-        correct: 2
-    },
-    {
-        question: "Cosa significa 'al dente' per la pasta?",
-        answers: ["Cotta poco", "Cotta perfettamente", "Bruciata", "Cruda"],
-        correct: 1
-    },
-    {
-        question: "Quale formaggio si usa sulla Pizza Margherita?",
-        answers: ["Gorgonzola", "Mozzarella", "Parmigiano", "Pecorino"],
-        correct: 1
-    },
-    {
-        question: "Quanto tempo cuoce la pasta in acqua bollente?",
-        answers: ["2 minuti", "10-12 minuti", "30 minuti", "1 ora"],
-        correct: 1
-    }
+    // Round 1: Facile
+    { q: "Qual è l'ingrediente principale della Carbonara?", a: ["Panna", "Uova", "Pomodoro"], c: 1, round: 1 },
+    { q: "La pizza è originaria di...", a: ["Roma", "Napoli", "Milano"], c: 1, round: 1 },
+    { q: "Cosa si mette sulla pasta al pomodoro?", a: ["Cioccolato", "Basilico", "Miele"], c: 1, round: 1 },
+    { q: "Di che colore è la mozzarella?", a: ["Rosso", "Verde", "Bianco"], c: 2, round: 1 },
+    
+    // Round 2: Medio
+    { q: "Quale formaggio è tipico della Carbonara?", a: ["Gorgonzola", "Pecorino", "Mozzarella"], c: 1, round: 2 },
+    { q: "Il pesto è originario di...", a: ["Sicilia", "Liguria", "Toscana"], c: 1, round: 2 },
+    { q: "La pasta 'al dente' significa...", a: ["Dura", "Perfetta", "Molle"], c: 1, round: 2 },
+    
+    // Round 3: Difficile (bonus)
+    { q: "Quale regione produce il Parmigiano Reggiano?", a: ["Emilia", "Lombardia", "Veneto"], c: 0, round: 3 },
+    { q: "Il tiramisù contiene...", a: ["Caffè", "Tè", "Cioccolato"], c: 0, round: 3 },
+    { q: "Quale erba è nel pesto genovese?", a: ["Prezzemolo", "Basilico", "Rosmarino"], c: 1, round: 3 }
 ];
 
 let currentQuestion = 0;
 let score = 0;
+let round = 1;
 
 function loadQuestion() {
-    const q = questions[currentQuestion];
-    document.getElementById('question').textContent = 
-        `Domanda ${currentQuestion + 1} di ${questions.length}: ${q.question}`;
+    // Filtra domande del round corrente
+    const roundQuestions = questions.filter(q => q.round === round);
+    const q = roundQuestions[currentQuestion];
+    
+    if (!q) {
+        if (round < 3) {
+            round++;
+            currentQuestion = 0;
+            document.getElementById('round-display').textContent = `Round ${round}`;
+            document.getElementById('status').textContent = `🎉 Round ${round-1} completato!`;
+            setTimeout(loadQuestion, 800);
+            return;
+        } else {
+            endQuiz();
+            return;
+        }
+    }
+    
+    document.getElementById('question').textContent = `${currentQuestion + 1}. ${q.q}`;
     
     const answersDiv = document.getElementById('answers');
     answersDiv.innerHTML = '';
     
-    q.answers.forEach((answer, index) => {
+    q.a.forEach((answer, index) => {
         const btn = document.createElement('button');
         btn.className = 'btn-start';
-        btn.style.margin = '10px';
-        btn.style.width = '80%';
+        btn.style.margin = '8px';
+        btn.style.width = '90%';
         btn.textContent = answer;
-        btn.onclick = () => checkAnswer(index);
+        btn.onclick = () => checkAnswer(index, q.c);
         answersDiv.appendChild(btn);
     });
     
     document.getElementById('score').textContent = `Punti: ${score}`;
 }
 
-function checkAnswer(selectedIndex) {
-    const correct = questions[currentQuestion].correct;
-    
-    if (selectedIndex === correct) {
+function checkAnswer(selected, correct) {
+    if (selected === correct) {
         score++;
         document.getElementById('score').textContent = `Punti: ${score} ✓`;
     } else {
@@ -63,19 +68,24 @@ function checkAnswer(selectedIndex) {
     }
     
     currentQuestion++;
-    
-    if (currentQuestion < questions.length) {
-        setTimeout(loadQuestion, 500);
-    } else {
-        setTimeout(showFinalScore, 500);
-    }
+    setTimeout(loadQuestion, 400);
 }
 
-function showFinalScore() {
+function endQuiz() {
     document.getElementById('question').textContent = 'Quiz completato!';
     document.getElementById('answers').innerHTML = '';
-    document.getElementById('score').textContent = 
-        `Hai fatto ${score} su ${questions.length}! ${score >= 3 ? '🎉 Bravo!' : ' Riprova!'}`;
+    
+    let message = score >= 7 ? '🏆 Chef Esperto!' : score >= 4 ? '👍 Bravo!' : '🍝 Riprova!';
+    document.getElementById('status').textContent = `${message} Hai fatto ${score}/10`;
 }
 
-loadQuestion();
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    round = 1;
+    document.getElementById('round-display').textContent = 'Round 1';
+    document.getElementById('status').textContent = '';
+    loadQuestion();
+}
+
+window.onload = loadQuestion;
