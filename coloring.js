@@ -1,4 +1,4 @@
-// coloring.js - Versione migliorata che blocca lo sfondo
+// coloring.js - Versione SEMPLIFICATA che funziona
 
 const canvas = document.getElementById('colorCanvas');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -36,7 +36,7 @@ palette.forEach(swatch => {
     });
 });
 
-// Gestione click/touch
+// Gestione click
 function handleColoring(e) {
     if (!imageLoaded) return;
     e.preventDefault();
@@ -54,28 +54,13 @@ function handleColoring(e) {
     const x = Math.floor((clientX - rect.left) * (canvas.width / rect.width));
     const y = Math.floor((clientY - rect.top) * (canvas.height / rect.height));
 
-    if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height) {
-        // Ottieni il colore del pixel cliccato
-        const pixel = ctx.getImageData(x, y, 1, 1).data;
-        
-        // BLOCCA SFONDO BIANCO: se è troppo chiaro, non colorare
-        if (pixel[0] > 240 && pixel[1] > 240 && pixel[2] > 240) {
-            return; // È sfondo bianco, ignora
-        }
-        
-        // BLOCCA LINEE NERE: se è troppo scuro, non colorare
-        if (pixel[0] < 50 && pixel[1] < 50 && pixel[2] < 50) {
-            return; // È linea del disegno, ignora
-        }
-        
-        floodFill(x, y, selectedColor);
-    }
+    floodFill(x, y, selectedColor);
 }
 
 canvas.addEventListener('mousedown', handleColoring);
 canvas.addEventListener('touchstart', handleColoring, { passive: false });
 
-// Flood Fill migliorato
+// Flood Fill SEMPLIFICATO
 function floodFill(startX, startY, fillColor) {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
@@ -87,33 +72,44 @@ function floodFill(startX, startY, fillColor) {
     const startG = data[startIdx + 1];
     const startB = data[startIdx + 2];
 
-    // Non colorare se è già quel colore
-    if (startR === fillColor.r && startG === fillColor.g && startB === fillColor.b) return;
-    
-    // Non colorare se è bianco o nero
-    if (startR > 240 || startR < 50) return;
+    // Non fare nulla se il colore è già quello selezionato
+    if (Math.abs(startR - fillColor.r) < 10 && 
+        Math.abs(startG - fillColor.g) < 10 && 
+        Math.abs(startB - fillColor.b) < 10) {
+        return;
+    }
 
-    const tolerance = 60; // Tolleranza più alta per aree sfumate
+    // Non colorare le linee nere del disegno
+    if (startR < 80 && startG < 80 && startB < 80) {
+        return;
+    }
+
     const stack = [[startX, startY]];
-    let pixelsFilled = 0;
-    const maxPixels = width * height * 0.3; // Limita a 30% del canvas
+    const targetColor = { r: startR, g: startG, b: startB };
+    const tolerance = 50;
 
-    while (stack.length && pixelsFilled < maxPixels) {
+    while (stack.length) {
         const [x, y] = stack.pop();
         const idx = (y * width + x) * 4;
 
-        if (
-            Math.abs(data[idx] - startR) <= tolerance &&
-            Math.abs(data[idx + 1] - startG) <= tolerance &&
-            Math.abs(data[idx + 2] - startB) <= tolerance &&
-            data[idx] > 50 && // Non superare linee nere
-            data[idx] < 240   // Non colorare sfondo bianco
-        ) {
+        const currentR = data[idx];
+        const currentG = data[idx + 1];
+        const currentB = data[idx + 2];
+
+        // Controlla se il pixel è simile al colore target
+        const isSimilar = 
+            Math.abs(currentR - targetColor.r) <= tolerance &&
+            Math.abs(currentG - targetColor.g) <= tolerance &&
+            Math.abs(currentB - targetColor.b) <= tolerance;
+
+        // Non colorare linee nere
+        const isBlackLine = currentR < 80 && currentG < 80 && currentB < 80;
+
+        if (isSimilar && !isBlackLine) {
             data[idx] = fillColor.r;
             data[idx + 1] = fillColor.g;
             data[idx + 2] = fillColor.b;
             data[idx + 3] = 255;
-            pixelsFilled++;
 
             if (x > 0) stack.push([x - 1, y]);
             if (x < width - 1) stack.push([x + 1, y]);
