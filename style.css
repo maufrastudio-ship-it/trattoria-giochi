@@ -24,7 +24,6 @@ h1, h2 {
     color: var(--wood-color);
 }
 
-/* Menu giochi */
 .game-card {
     background: white;
     border: 2px solid var(--wood-color);
@@ -53,7 +52,6 @@ h1, h2 {
     margin: 5px;
 }
 
-/* Memory */
 .memory-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -79,7 +77,6 @@ h1, h2 {
     border: 2px solid var(--wood-color);
 }
 
-/* LOADER */
 .loader-overlay {
     position: fixed;
     top: 0;
@@ -125,7 +122,6 @@ h1, h2 {
     50% { opacity: 1; transform: scale(1.05); }
 }
 
-/* D-PAD per Pac-Man */
 .d-pad {
     display: flex;
     flex-direction: column;
@@ -175,11 +171,6 @@ h1, h2 {
     }
 }
 
-/* ========================================
-   STILI PER I NUOVI GIOCHI
-   ======================================== */
-
-/* Parole Nascoste */
 .word-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -222,7 +213,6 @@ h1, h2 {
 }
 .word-item.found { text-decoration: line-through; opacity: 0.5; background: #55efc4; }
 
-/* Sequenza di Sapori (Simon) */
 .simon-board {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -245,52 +235,6 @@ h1, h2 {
 .simon-btn[data-color="yellow"] { background: #f0ad4e; }
 .simon-btn[data-color="purple"] { background: #9b59b6; }
 
-/* Trova le Differenze (vecchio - puoi rimuoverlo se non usi più il gioco) */
-.diff-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin: 20px 0;
-}
-.diff-scene {
-    width: 150px;
-    height: 150px;
-    background: #fff8e1;
-    border: 3px solid var(--wood-color);
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-}
-.diff-scene.right { border-color: #d9534f; }
-.diff-target {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.3s;
-}
-.diff-target:hover { box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.4); }
-.diff-target.found { background: rgba(85, 239, 196, 0.6); border: 3px solid #00b894; transform: scale(1.1); }
-.scene-table { position: absolute; bottom: 20px; left: 10px; right: 10px; height: 10px; background: #8b5a2b; border-radius: 3px; }
-.scene-bread { position: absolute; bottom: 30px; left: 20px; width: 30px; height: 15px; background: #f0ad4e; border-radius: 50% 50% 5px 5px; }
-.scene-wine { position: absolute; bottom: 30px; right: 30px; width: 15px; height: 25px; background: #d9534f; border-radius: 3px 3px 0 0; }
-.scene-pot { position: absolute; bottom: 30px; left: 60px; width: 35px; height: 20px; background: #333; border-radius: 5px; }
-.scene-spoon { position: absolute; bottom: 40px; left: 50px; width: 15px; height: 4px; background: #c0c0c0; transform: rotate(-20deg); }
-.scene-flower { position: absolute; top: 20px; right: 20px; width: 20px; height: 20px; background: #5cb85c; border-radius: 50%; }
-.diff-1 { display: none; } .right .diff-1 { display: block; top: 30px; left: 40px; background: #55efc4; }
-.diff-2 { display: none; } .right .diff-2 { display: block; top: 50px; right: 10px; background: #ffeaa7; }
-.diff-3 { display: none; } .right .diff-3 { display: block; bottom: 50px; left: 10px; background: #fd79a8; }
-.diff-4 { display: none; } .right .diff-4 { display: block; top: 10px; left: 10px; background: #00b894; }
-.diff-5 { display: none; } .right .diff-5 { display: block; bottom: 10px; right: 10px; background: #a29bfe; }
-@media (max-width: 400px) { .diff-scene { width: 130px; height: 130px; } }
-
-/* ========================================
-   STILI PER LIVELLI E PROGRESSIONE
-   ======================================== */
-
-/* UI Livelli */
 .level-ui {
     display: flex;
     justify-content: center;
@@ -312,11 +256,7 @@ h1, h2 {
     color: var(--accent-color);
     display: none;
 }
-.timer-display.warning {
-    animation: pulse 0.5s ease-in-out infinite;
-}
 
-/* Pulsanti azione */
 .action-buttons {
     display: flex;
     justify-content: center;
@@ -325,7 +265,6 @@ h1, h2 {
     flex-wrap: wrap;
 }
 
-/* Template per Disegna */
 .template-selector {
     display: flex;
     justify-content: center;
@@ -356,15 +295,6 @@ h1, h2 {
     cursor: not-allowed;
 }
 
-/* Griglie progressive per Parole */
-.word-grid.level-2 { grid-template-columns: repeat(7, 1fr); }
-.word-grid.level-3 { grid-template-columns: repeat(8, 1fr); }
-
-/* Scene per Differenze */
-.diff-scene.level-2 { width: 160px; height: 160px; }
-.diff-scene.level-3 { width: 170px; height: 170px; }
-
-/* Modal completamento */
 .completion-modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -399,7 +329,6 @@ h1, h2 {
     margin-bottom: 10px;
 }
 
-/* Toggle Relax Mode */
 .relax-toggle {
     margin: 10px 0;
     font-size: 0.9rem;
@@ -413,9 +342,6 @@ h1, h2 {
     height: 18px;
 }
 
-/* ========================================
-   CERCA L'INTRUSO (NUOVO GIOCO)
-   ======================================== */
 .intruso-grid {
     display: grid;
     gap: 6px;
