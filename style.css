@@ -174,6 +174,7 @@ h1, h2 {
         font-size: 1.6rem;
     }
 }
+
 /* ========================================
    STILI PER I NUOVI GIOCHI
    ======================================== */
@@ -244,7 +245,7 @@ h1, h2 {
 .simon-btn[data-color="yellow"] { background: #f0ad4e; }
 .simon-btn[data-color="purple"] { background: #9b59b6; }
 
-/* Trova le Differenze */
+/* Trova le Differenze (vecchio - puoi rimuoverlo se non usi più il gioco) */
 .diff-container {
     display: flex;
     justify-content: center;
@@ -272,23 +273,19 @@ h1, h2 {
 }
 .diff-target:hover { box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.4); }
 .diff-target.found { background: rgba(85, 239, 196, 0.6); border: 3px solid #00b894; transform: scale(1.1); }
-/* Elementi scena CSS-only */
 .scene-table { position: absolute; bottom: 20px; left: 10px; right: 10px; height: 10px; background: #8b5a2b; border-radius: 3px; }
 .scene-bread { position: absolute; bottom: 30px; left: 20px; width: 30px; height: 15px; background: #f0ad4e; border-radius: 50% 50% 5px 5px; }
 .scene-wine { position: absolute; bottom: 30px; right: 30px; width: 15px; height: 25px; background: #d9534f; border-radius: 3px 3px 0 0; }
 .scene-pot { position: absolute; bottom: 30px; left: 60px; width: 35px; height: 20px; background: #333; border-radius: 5px; }
 .scene-spoon { position: absolute; bottom: 40px; left: 50px; width: 15px; height: 4px; background: #c0c0c0; transform: rotate(-20deg); }
 .scene-flower { position: absolute; top: 20px; right: 20px; width: 20px; height: 20px; background: #5cb85c; border-radius: 50%; }
-/* Differenze attive solo nella scena destra */
 .diff-1 { display: none; } .right .diff-1 { display: block; top: 30px; left: 40px; background: #55efc4; }
 .diff-2 { display: none; } .right .diff-2 { display: block; top: 50px; right: 10px; background: #ffeaa7; }
 .diff-3 { display: none; } .right .diff-3 { display: block; bottom: 50px; left: 10px; background: #fd79a8; }
 .diff-4 { display: none; } .right .diff-4 { display: block; top: 10px; left: 10px; background: #00b894; }
 .diff-5 { display: none; } .right .diff-5 { display: block; bottom: 10px; right: 10px; background: #a29bfe; }
+@media (max-width: 400px) { .diff-scene { width: 130px; height: 130px; } }
 
-@media (max-width: 400px) {
-    .diff-scene { width: 130px; height: 130px; }
-}
 /* ========================================
    STILI PER LIVELLI E PROGRESSIONE
    ======================================== */
@@ -313,6 +310,7 @@ h1, h2 {
 .timer-display {
     font-weight: bold;
     color: var(--accent-color);
+    display: none;
 }
 .timer-display.warning {
     animation: pulse 0.5s ease-in-out infinite;
@@ -413,4 +411,55 @@ h1, h2 {
 .relax-toggle input {
     width: 18px;
     height: 18px;
+}
+
+/* ========================================
+   CERCA L'INTRUSO (NUOVO GIOCO)
+   ======================================== */
+.intruso-grid {
+    display: grid;
+    gap: 6px;
+    max-width: 360px;
+    margin: 20px auto;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    border: 3px solid var(--wood-color);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+}
+
+.intruso-cell {
+    aspect-ratio: 1;
+    background: #fff8e1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s, background 0.2s;
+    border: 2px solid #e0d0b0;
+}
+
+.intruso-cell:active {
+    transform: scale(0.92);
+    background: #ffeaa7;
+}
+
+.intruso-cell.found {
+    animation: pop 0.3s ease;
+    border-color: var(--accent-color);
+    background: #55efc4;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@media (max-width: 400px) {
+    .intruso-cell { font-size: 1.4rem; }
+    .intruso-grid { padding: 8px; gap: 4px; }
 }
