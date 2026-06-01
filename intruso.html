@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerca l'Intruso</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- LOADER -->
+    <div id="page-loader" class="loader-overlay">
+        <div class="loader-emoji">🧐</div>
+        <p class="loader-text">La Nonna sta preparando...</p>
+    </div>
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('page-loader').classList.add('hidden'), 900);
+        });
+    </script>
+
+    <h2>🧐 Cerca l'Intruso</h2>
+    
+    <div class="level-ui">
+        <span id="level-display" class="level-badge">Livello 1</span>
+        <span id="timer-display" class="timer-display"></span>
+    </div>
+    
+    <p id="instruction" style="font-size: 1.1rem; margin: 10px 0; font-weight: bold;">Trova l'emoji diversa!</p>
+    <p id="status" style="font-style: italic; min-height: 1.5em;"></p>
+
+    <!-- La griglia di gioco -->
+    <div id="game-grid" class="intruso-grid"></div>
+
+    <div class="action-buttons">
+        <button class="btn-start" onclick="location.href='index.html'">🏠 Menu</button>
+    </div>
+
+    <script src="intruso.js"></script>
+</body>
+</html>
