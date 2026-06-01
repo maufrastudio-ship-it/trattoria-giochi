@@ -213,6 +213,9 @@ h1, h2 {
 }
 .word-item.found { text-decoration: line-through; opacity: 0.5; background: #55efc4; }
 
+/* ========================================
+   SEQUENZA DI SAPORI (SIMON) - INGREDIENTI
+   ======================================== */
 .simon-board {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -220,20 +223,45 @@ h1, h2 {
     max-width: 280px;
     margin: 20px auto;
 }
+
 .simon-btn {
     aspect-ratio: 1;
     border-radius: 50%;
     border: 4px solid var(--wood-color);
     cursor: pointer;
     transition: all 0.15s;
-    opacity: 0.7;
+    opacity: 0.9;
     box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+    
+    /* Stile per le emoji ingredienti */
+    font-size: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    background-color: white;
+    line-height: 1;
 }
-.simon-btn:active, .simon-btn.active { opacity: 1; transform: scale(0.95); box-shadow: inset 0 0 5px rgba(0,0,0,0.5); }
-.simon-btn[data-color="red"] { background: #d9534f; }
-.simon-btn[data-color="green"] { background: #5cb85c; }
-.simon-btn[data-color="yellow"] { background: #f0ad4e; }
-.simon-btn[data-color="purple"] { background: #9b59b6; }
+
+/* Colori di sfondo leggeri per i pulsanti */
+.simon-btn[data-color="red"] { background: #ffe6e6; }
+.simon-btn[data-color="green"] { background: #e6ffe6; }
+.simon-btn[data-color="yellow"] { background: #fff9e6; }
+.simon-btn[data-color="purple"] { background: #f2e6ff; }
+
+/* Effetto quando si illuminano */
+.simon-btn:active, .simon-btn.active { 
+    opacity: 1; 
+    transform: scale(0.95); 
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+    filter: brightness(0.9);
+}
+
+/* Colori pieni quando attivi per feedback visivo */
+.simon-btn.active[data-color="red"] { background: #d9534f; }
+.simon-btn.active[data-color="green"] { background: #5cb85c; }
+.simon-btn.active[data-color="yellow"] { background: #f0ad4e; }
+.simon-btn.active[data-color="purple"] { background: #9b59b6; }
 
 .level-ui {
     display: flex;
